@@ -1,4 +1,9 @@
 ﻿from noaa_sdk import noaa
+import numpy as np
+import pandas as pd
+from matplotlib import pyplot
+
+
 n = noaa.NOAA()
 
 zipcodes = [31905, 11102, 19403, 10996]
@@ -9,9 +14,19 @@ cities = [
 	{ 'zip': 10996, 'name': 'West Point' }
 ]
 
+d = {}
+series = []
 for city in cities:
+	d = {}
 	res = n.get_forecasts(city['zip'], 'US', True)
 
 	print (city['name'] + '\n')
 	for i in res:
 		print(i['startTime'] + ': ' + str(i['temperature']) + i['temperatureUnit'])
+		d[i['startTime']] = i['temperature']
+
+	series.append(pd.Series(d))
+
+for s in series:
+	s.plot()
+	pyplot.show()
