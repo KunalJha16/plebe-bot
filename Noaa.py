@@ -28,5 +28,8 @@ for city in cities:
 	series.append(pd.Series(d))
 
 for s in series:
+	fig = pyplot.figure()
 	s.plot()
+	fig.savefig('figure1.png')
 	pyplot.show()
+    
